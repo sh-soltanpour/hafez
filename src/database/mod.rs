@@ -19,7 +19,7 @@ lazy_static! {
 
 impl Database {
     pub fn set(key: String, value: String) {
-        DATABASE.lock().unwrap().map_name.insert(key.to_string(), value.to_string());
+        DATABASE.lock().unwrap().map_name.insert(key, value);
     }
 
     pub fn get(key: String) -> Option<String> {
@@ -28,13 +28,13 @@ impl Database {
         Some(String::from(value))
     }
 
-    pub fn exec_command<'a>(command: DatabaseCommand) -> Option<String> {
+    pub fn exec_command(command: DatabaseCommand) -> Option<String> {
         match command.command_type {
-            CommandType::SET => {
+            CommandType::Set => {
                 Self::set(command.key, command.value.unwrap());
                 None
             }
-            CommandType::GET => {
+            CommandType::Get => {
                 Self::get(command.key)
             }
         }

@@ -15,14 +15,14 @@ impl DatabaseCommand {
         let key: String;
         let value: Option<String>;
         match command_type {
-            CommandType::GET => {
+            CommandType::Get => {
                 if commands.len() != 2 {
                     return Err("Command size is not correct");
                 }
                 key = commands[1].to_string();
                 value = None;
             }
-            CommandType::SET => {
+            CommandType::Set => {
                 if commands.len() != 3 {
                     return Err("Command size is not correct");
                 }
@@ -30,10 +30,10 @@ impl DatabaseCommand {
                 value = Some(commands[2].to_string());
             }
         }
-        return Ok(DatabaseCommand {
+        Ok(DatabaseCommand {
             command_type,
             key,
             value,
-        });
+        })
     }
 }

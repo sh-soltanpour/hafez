@@ -1,8 +1,8 @@
 use std::str::FromStr;
 
 pub enum CommandType {
-    GET,
-    SET,
+    Get,
+    Set,
 }
 
 impl FromStr for CommandType {
@@ -10,8 +10,8 @@ impl FromStr for CommandType {
 
     fn from_str(input: &str) -> Result<CommandType, Self::Err> {
         match &input.to_uppercase()[..] {
-            "GET" => Ok(CommandType::GET),
-            "SET" => Ok(CommandType::SET),
+            "GET" => Ok(CommandType::Get),
+            "SET" => Ok(CommandType::Set),
             _ => Err("Command is not Defined"),
         }
     }

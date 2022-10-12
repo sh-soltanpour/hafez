@@ -23,11 +23,11 @@ fn handle_connection(stream: TcpStream) {
 
         match DatabaseCommand::from(buf.split_whitespace().collect()) {
             Err(str) => {
-                stream.try_clone().unwrap().write((str.to_owned() + "\n").as_ref()).unwrap();
+                stream.try_clone().unwrap().write_all((str.to_owned() + "\n").as_ref()).unwrap();
             }
             Ok(command) => {
                 if let Some(response) = Database::exec_command(command) {
-                    stream.try_clone().unwrap().write((response + "\n").as_ref()).unwrap();
+                    stream.try_clone().unwrap().write_all((response + "\n").as_ref()).unwrap();
                 }
             }
         }
