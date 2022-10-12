@@ -2,13 +2,16 @@ use std::io::{BufRead, BufReader, Write};
 use std::net::{TcpListener, TcpStream};
 use crate::database::Database;
 use crate::database::database_command::DatabaseCommand;
+use threadpool::ThreadPool;
 
 pub fn listen() {
+    let pool = ThreadPool::new(30);
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
     for stream in listener.incoming() {
         let stream = stream.unwrap();
-        handle_connection(stream);
-        println!("Connection established!");
+        pool.execute(move || {
+            handle_connection(stream);
+        });
     }
 }
 

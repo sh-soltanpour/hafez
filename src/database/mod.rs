@@ -3,7 +3,6 @@ pub mod database_command;
 use std::collections::HashMap;
 use crate::database::database_command::DatabaseCommand;
 use crate::database::database_command::command_type::CommandType;
-
 use lazy_static::lazy_static;
 use std::sync::Mutex;
 
@@ -11,9 +10,7 @@ pub struct Database {
     map_name: HashMap<String, String>,
 }
 
-
 lazy_static! {
-
     static ref DATABASE: Mutex<Database> = Mutex::new(Database{map_name: HashMap::new()});
 }
 
