@@ -1,9 +1,7 @@
-use std::fmt::Error;
-use std::io::{BufRead, BufReader, Read, Write};
+use std::io::{BufRead, BufReader, Write};
 use std::net::{TcpListener, TcpStream};
 use crate::database::Database;
 use crate::database::database_command::DatabaseCommand;
-use std::panic::resume_unwind;
 
 pub fn listen() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -14,11 +12,11 @@ pub fn listen() {
     }
 }
 
-fn handle_connection(mut stream: TcpStream) {
+fn handle_connection(stream: TcpStream) {
     let mut buf_reader = BufReader::new(stream.try_clone().unwrap());
     loop {
         let mut buf = String::new();
-        buf_reader.read_line(&mut buf);
+        buf_reader.read_line(&mut buf).unwrap();
         if buf.trim() == "EXIT" {
             return;
         }
@@ -29,7 +27,7 @@ fn handle_connection(mut stream: TcpStream) {
             }
             Ok(command) => {
                 if let Some(response) = Database::exec_command(command) {
-                    stream.try_clone().unwrap().write((response + "\n").as_ref());
+                    stream.try_clone().unwrap().write((response + "\n").as_ref()).unwrap();
                 }
             }
         }

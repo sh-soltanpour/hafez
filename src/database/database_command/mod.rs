@@ -13,7 +13,7 @@ impl DatabaseCommand {
     pub fn from(commands: Vec<&str>) -> Result<DatabaseCommand, &'static str> {
         let command_type = CommandType::from_str(commands[0])?;
         let key: String;
-        let mut value: Option<String>;
+        let value: Option<String>;
         match command_type {
             CommandType::GET => {
                 if commands.len() != 2 {
