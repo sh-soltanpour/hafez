@@ -11,6 +11,9 @@ pub struct DatabaseCommand {
 
 impl DatabaseCommand {
     pub fn from(commands: Vec<&str>) -> Result<DatabaseCommand, &'static str> {
+        if commands.len() < 2 {
+            return Err("Command size is not correct");
+        }
         let command_type = CommandType::from_str(commands[0])?;
         let key: String;
         let value: Option<String>;
