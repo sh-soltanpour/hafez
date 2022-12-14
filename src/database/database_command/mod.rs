@@ -31,6 +31,13 @@ impl DatabaseCommand {
                 }
                 key = commands[1].to_string();
                 value = Some(commands[2].to_string());
+            },
+            CommandType::Delete => {
+                if commands.len() != 2 {
+                    return Err("Command size is not correct");
+                }
+                key = commands[1].to_string();
+                value = None;
             }
         }
         Ok(DatabaseCommand {

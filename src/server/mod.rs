@@ -29,9 +29,8 @@ fn handle_connection(stream: TcpStream) {
                 stream.try_clone().unwrap().write_all((str.to_owned() + "\n").as_ref()).unwrap();
             }
             Ok(command) => {
-                if let Some(response) = Database::exec_command(command) {
-                    stream.try_clone().unwrap().write_all((response + "\n").as_ref()).unwrap();
-                }
+                let response = Database::exec_command(command);
+                stream.try_clone().unwrap().write_all((response + "\n").as_ref()).unwrap();
             }
         }
     }

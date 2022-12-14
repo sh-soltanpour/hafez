@@ -3,6 +3,7 @@ use std::str::FromStr;
 pub enum CommandType {
     Get,
     Set,
+    Delete
 }
 
 impl FromStr for CommandType {
@@ -12,6 +13,7 @@ impl FromStr for CommandType {
         match &input.to_uppercase()[..] {
             "GET" => Ok(CommandType::Get),
             "SET" => Ok(CommandType::Set),
+            "DELETE" => Ok(CommandType::Delete),
             _ => Err("Command is not Defined"),
         }
     }

@@ -25,14 +25,24 @@ impl Database {
         Some(String::from(value))
     }
 
-    pub fn exec_command(command: DatabaseCommand) -> Option<String> {
+    pub fn delete(key: String) -> Option<String> {
+        DATABASE.lock().unwrap().map_name.remove(&key)
+    }
+
+    pub fn exec_command(command: DatabaseCommand) -> String {
         match command.command_type {
             CommandType::Set => {
                 Self::set(command.key, command.value.unwrap());
-                None
+                String::from("Key set!")
             }
             CommandType::Get => {
-                Self::get(command.key)
+                Self::get(command.key).unwrap_or(String::from("Key not found!"))
+            }
+            CommandType::Delete => {
+                match Self::delete(command.key) {
+                    Some(_) => String::from("Key deleted!"),
+                    None => String::from("Key Does not exist")
+                }
             }
         }
     }

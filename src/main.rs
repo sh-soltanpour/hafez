@@ -3,6 +3,6 @@ mod database;
 
 
 fn main() {
-    println!("Hello, world!");
+    // println!("Hello, world!");
     server::listen();
 }
